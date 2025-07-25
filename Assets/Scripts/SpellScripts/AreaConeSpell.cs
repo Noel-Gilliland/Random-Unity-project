@@ -7,7 +7,7 @@ public class AreaConeSpell : SpellBehaviour
     public override void Cast(Transform caster, SpellData spell)
 
     {
-        
+
         float range = 5f;
         float angle = 45f;
         Collider[] hits = Physics.OverlapSphere(caster.position, range);
@@ -30,14 +30,15 @@ public class AreaConeSpell : SpellBehaviour
                 if (enemy != null)
                 {
                     enemy.TakeDamage(coneSpell.damage);
-                    if (spell.visualEffectPrefab)
-                    {
-                        GameObject vfx = Instantiate(spell.visualEffectPrefab, enemy.transform.position, Quaternion.identity);
-                        Destroy(vfx, 2f); // Destroy the visual effect after 2 seconds
-                    }
+
                 }
             }
         }
+        if (spell.visualEffectPrefab)
+                    {
+                        GameObject vfx = Instantiate(spell.visualEffectPrefab, caster.position, Quaternion.identity);
+                        Destroy(vfx, 2f); // Destroy the visual effect after 2 seconds
+                    }
     }
     
     

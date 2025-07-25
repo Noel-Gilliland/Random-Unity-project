@@ -7,9 +7,10 @@ public class SelfBuffSpell : SpellBehaviour
     public override void Cast(Transform caster, SpellData spell)
     {
         Debug.Log("Buff applied to self!");
-        if (spell.visualEffectPrefab)
-            Instantiate(spell.visualEffectPrefab, caster.position, Quaternion.identity);
-
+        if (spell.visualEffectPrefab) { 
+        GameObject vfx = Instantiate(spell.visualEffectPrefab, caster.position, Quaternion.identity);
+        Destroy(vfx, 2f); // Destroy the visual effect after 2 seconds
+    }
 
         SelfBuffSpellData buffSpell = spell as SelfBuffSpellData;
         if (buffSpell == null)

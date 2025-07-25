@@ -57,7 +57,7 @@ public class PlayerCharacter : MonoBehaviour
             behavior.Cast(transform, spell);
 
         if (spell.visualEffectPrefab != null)
-        Instantiate(spell.visualEffectPrefab, transform.position, Quaternion.identity);
+            Instantiate(spell.visualEffectPrefab, transform.position, Quaternion.identity);
 
         Destroy(spellObject, 1f);
     }

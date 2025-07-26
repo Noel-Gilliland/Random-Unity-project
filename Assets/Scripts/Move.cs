@@ -21,7 +21,7 @@ public class Move : MonoBehaviour
     }
 
     void Update()
-{
+    {
     groundedPlayer = controller.isGrounded;
 
     // Always read input for movement
@@ -44,10 +44,10 @@ public class Move : MonoBehaviour
     /*void Update()
     {
         groundedPlayer = controller.isGrounded;
-       
+
 
         // Horizontal input
-       Vector3 move = Vector3.zero;
+        Vector3 move = Vector3.zero;
 
         if (groundedPlayer)
         {

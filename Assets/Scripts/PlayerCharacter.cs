@@ -56,9 +56,6 @@ public class PlayerCharacter : MonoBehaviour
         if (behavior != null)
             behavior.Cast(transform, spell);
 
-        if (spell.visualEffectPrefab != null)
-            Instantiate(spell.visualEffectPrefab, transform.position, Quaternion.identity);
-
         Destroy(spellObject, 1f);
     }
 

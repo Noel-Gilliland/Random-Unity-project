@@ -34,11 +34,11 @@ public class AreaConeSpell : SpellBehaviour
                 }
             }
         }
-        if (spell.visualEffectPrefab)
-                    {
-                        GameObject vfx = Instantiate(spell.visualEffectPrefab, caster.position, Quaternion.identity);
-                        Destroy(vfx, 2f); // Destroy the visual effect after 2 seconds
-                    }
+        if (spell.visualEffectPrefab != null){
+            GameObject vfx = Instantiate(spell.visualEffectPrefab, caster.position, caster.rotation);
+            Destroy(vfx, 2f); // Destroy the visual effect after 2 seconds
+        }
+    
     }
     
     

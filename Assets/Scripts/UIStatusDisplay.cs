@@ -5,15 +5,27 @@ using TMPro;
 
 public class UIStatusDisplay : MonoBehaviour
 {
-   public PlayerCharacter character;   // Drag your player here
+    private PlayerCharacter playerCharacter;   // Drag your player here
     public TMP_Text statusText;             // Drag your Text UI here
+
+   void Start()
+{
+    StartCoroutine(Init());
+}
+
+IEnumerator Init()
+{
+    yield return PlayerLocator.WaitForPlayer();
+    playerCharacter = PlayerLocator.Instance;
+}
+
 
     void Update()
     {
-        if (character != null)
+        if (playerCharacter != null)
         {
-            float level = character.level;
-            statusText.text = $"Level: {level:F1}";
+            float level = playerCharacter.level;
+            statusText.text = $"Level: {level}";
         }
     }
 }

@@ -34,9 +34,13 @@ public class AreaConeSpell : SpellBehaviour
                 }
             }
         }
-        if (spell.visualEffectPrefab != null){
-            GameObject vfx = Instantiate(spell.visualEffectPrefab, caster.position, caster.rotation);
-            Destroy(vfx, 2f); // Destroy the visual effect after 2 seconds
+        if (spell.visualEffectPrefab != null)
+        {
+           Vector3 position = new Vector3(-750f, 550f, 345f); // X, Y, Z coordinates
+            GameObject effect = Instantiate(spell.visualEffectPrefab, position, Quaternion.identity);
+            Destroy(effect, 2f);
+
+            Debug.Log("AreaConeSpell casted at: " + caster.position);
         }
     
     }

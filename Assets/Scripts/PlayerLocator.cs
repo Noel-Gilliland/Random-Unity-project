@@ -1,0 +1,38 @@
+using System.Collections;
+using UnityEngine;
+
+public class PlayerLocator : MonoBehaviour
+{
+    public static PlayerCharacter Instance { get; private set; }
+
+    public static bool IsReady => Instance != null;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            StartCoroutine(FindPlayerRoutine());
+        }
+    }
+
+    private IEnumerator FindPlayerRoutine()
+    {
+        while (Instance == null)
+        {
+            GameObject playerObj = GameObject.Find("Player"); // or FindWithTag("Player")
+            if (playerObj != null)
+            {
+                Instance = playerObj.GetComponent<PlayerCharacter>();
+                Debug.Log("[PlayerLocator] PlayerCharacter found.");
+            }
+
+            yield return null;
+        }
+    }
+
+    public static IEnumerator WaitForPlayer()
+    {
+        while (!IsReady)
+            yield return null;
+    }
+}

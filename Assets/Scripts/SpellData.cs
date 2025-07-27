@@ -13,6 +13,8 @@ public abstract class SpellData : ScriptableObject
     public SpellType spellType;
     public int requiredLevel;
 
+    public Sprite icon;
+
     
 }
 

@@ -19,7 +19,7 @@ public class ThirdPersonCamera : MonoBehaviour
         {
             yaw += Input.GetAxis("Mouse X") * rotationSpeed;
             pitch -= Input.GetAxis("Mouse Y") * rotationSpeed;
-            pitch = Mathf.Clamp(pitch, -35f, 60f);
+            pitch = Mathf.Clamp(pitch, -50f, 45f);
         }
 
         target.rotation = Quaternion.Euler(0, yaw, 0);  // <--- rotates the player

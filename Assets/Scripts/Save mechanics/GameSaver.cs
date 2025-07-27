@@ -4,14 +4,14 @@ public class GameSaver : MonoBehaviour
 {
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.N))
         {
             GameObject player = GameObject.Find("Player");
             if (player != null)
                 SaveSystem.Save(player);
         }
 
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.M))
         {
             var data = SaveSystem.Load();
             if (data != null)

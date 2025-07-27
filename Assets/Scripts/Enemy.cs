@@ -8,10 +8,21 @@ public class Enemy : MonoBehaviour
 
     public float health = 100;
     
+    void Start()
+{
+    StartCoroutine(Init());
+}
+
+IEnumerator Init()
+{
+    yield return PlayerLocator.WaitForPlayer();
+    playerCharacter = PlayerLocator.Instance;
+}
+
     public void TakeDamage(float damage)
     {
         health -= damage;
-        Debug.Log("Enemy " + gameObject.name +   " took damage. Remaining HP: " + health);
+        Debug.Log("Enemy " + gameObject.name + " took damage. Remaining HP: " + health);
 
         if (health <= 0)
         {
@@ -22,7 +33,8 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         Debug.Log("Enemy died!");
-        Destroy(gameObject); // Remove enemy from scene
-        playerCharacter.Experience += 25f; // Give 25 experience points
+        Destroy(gameObject);
+        if (playerCharacter != null)
+        playerCharacter.Experience += 25f;
     }
 }

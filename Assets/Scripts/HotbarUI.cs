@@ -5,7 +5,7 @@ using TMPro;
 
 public class HotbarUI : MonoBehaviour
 {
-    public PlayerCharacter playerCharacter;
+    private PlayerCharacter playerCharacter; // Assign in Inspector or find dynamically
     public List<Image> spellIcons; // Assign in Inspector, one for each slot
     public List<TextMeshProUGUI> cooldownTexts; // Assign in Inspector, one for each slot
 
@@ -15,23 +15,30 @@ public class HotbarUI : MonoBehaviour
     void Start()
     {
         cooldownTimers = new float[spellIcons.Count];
+        if (playerCharacter == null)
+    {
+        GameObject playerObj = GameObject.Find("Player");
+        if (playerObj != null)
+            playerCharacter = playerObj.GetComponent<PlayerCharacter>();
+    }
     }
 
     void Update()
     {
+        if (playerCharacter == null) return;
         for (int i = 0; i < hotbarButtons.Count; i++)
-    {
-        if (i < playerCharacter.spellBook.Count)
         {
-            hotbarButtons[i].gameObject.SetActive(true);
-            // Optionally set icon, text, etc. here
-            // Example: spellIcons[i].sprite = playerCharacter.spellBook[i].icon;
+            if (i < playerCharacter.spellBook.Count)
+            {
+                hotbarButtons[i].gameObject.SetActive(true);
+                // Optionally set icon, text, etc. here
+                // Example: spellIcons[i].sprite = playerCharacter.spellBook[i].icon;
+            }
+            else
+            {
+                hotbarButtons[i].gameObject.SetActive(false);
+            }
         }
-        else
-        {
-            hotbarButtons[i].gameObject.SetActive(false);
-        }
-    }
         for (int i = 0; i < spellIcons.Count; i++)
         {
             if (i < playerCharacter.spellBook.Count)

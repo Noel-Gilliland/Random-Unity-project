@@ -8,7 +8,7 @@ public class UIStatusDisplay : MonoBehaviour
     private PlayerCharacter playerCharacter;   // Drag your player here
     public TMP_Text statusText;             // Drag your Text UI here
 
-   void Start()
+    void Start()
 {
     StartCoroutine(Init());
 }
@@ -27,5 +27,10 @@ IEnumerator Init()
             float level = playerCharacter.level;
             statusText.text = $"Level: {level}";
         }
+        else
+        {
+            statusText.text = "Player not found.";
+        }
+        
     }
 }

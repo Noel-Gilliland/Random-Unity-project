@@ -36,8 +36,7 @@ public class AreaConeSpell : SpellBehaviour
         }
         if (spell.visualEffectPrefab != null)
         {
-           Vector3 position = new Vector3(-750f, 550f, 345f); // X, Y, Z coordinates
-            GameObject effect = Instantiate(spell.visualEffectPrefab, position, Quaternion.identity);
+            GameObject effect = Instantiate(spell.visualEffectPrefab, caster.position + (Vector3.up * 1f), Quaternion.identity);
             Destroy(effect, 2f);
 
             Debug.Log("AreaConeSpell casted at: " + caster.position);

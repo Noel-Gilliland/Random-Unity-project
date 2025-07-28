@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 2231120682249436014}
   - component: {fileID: 8084689668262753342}
   - component: {fileID: 8628757240828635571}
+  - component: {fileID: 6985089146124812605}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92,6 +93,24 @@ MonoBehaviour:
   coneAngle: 45
   coneRange: 5
   showSpellCone: 1
+--- !u!114 &6985089146124812605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327232552989210013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5773d68d5a7ece44498d4a1727aa1734, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 1
+  lastCastTime: 0
+  manaRegenRate: 5
+  manaRegenCooldown: 1
+  classSpellList: {fileID: 11400000, guid: 3848b730aff591643b0bf1be7bf3fdf5, type: 2}
+  spellBook: []
 --- !u!1 &2199875473207256695
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,7 +120,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3111318760799525078}
-  - component: {fileID: -5070350001611970239}
   m_Layer: 0
   m_Name: Fire
   m_TagString: Untagged
@@ -126,24 +144,6 @@ Transform:
   - {fileID: 4327751886208064497}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-5070350001611970239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2199875473207256695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5773d68d5a7ece44498d4a1727aa1734, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  level: 1
-  lastCastTime: 0
-  manaRegenRate: 5
-  manaRegenCooldown: 1
-  classSpellList: {fileID: 11400000, guid: 3848b730aff591643b0bf1be7bf3fdf5, type: 2}
-  spellBook: []
 --- !u!1 &2317171884805739877
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,7 +23,7 @@ public class Move : MonoBehaviour
     void Update()
     {
     groundedPlayer = controller.isGrounded;
-
+    
     // Always read input for movement
     Vector3 move = transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical");
     move = Vector3.ClampMagnitude(move, 1f);
@@ -70,7 +70,7 @@ public class Move : MonoBehaviour
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
         }
 
-         
+
 
         // Apply gravity
         playerVelocity.y += gravityValue * Time.deltaTime;

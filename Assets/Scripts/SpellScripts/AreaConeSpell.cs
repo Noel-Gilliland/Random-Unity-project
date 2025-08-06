@@ -36,7 +36,13 @@ public class AreaConeSpell : SpellBehaviour
         }
         if (spell.visualEffectPrefab != null)
         {
-            GameObject effect = Instantiate(spell.visualEffectPrefab, caster.position + (Vector3.up * 1f), Quaternion.identity);
+            GameObject effect = Instantiate(
+            spell.visualEffectPrefab,
+            caster.position + Vector3.up * 1f,
+            Quaternion.LookRotation(caster.forward)
+        );
+
+            effect.SetActive(true);
             Destroy(effect, 2f);
 
             Debug.Log("AreaConeSpell casted at: " + caster.position);

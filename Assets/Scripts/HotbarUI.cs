@@ -24,30 +24,23 @@ public class HotbarUI : MonoBehaviour
     }
 
     void Update()
+{
+    if (playerCharacter == null) return;
+
+    for (int i = 0; i < hotbarButtons.Count; i++)
     {
-        if (playerCharacter == null) return;
-        for (int i = 0; i < hotbarButtons.Count; i++)
-        {
-            if (i < playerCharacter.spellBook.Count)
+            Debug.Log("Hello");
+        if (i < playerCharacter.spellBook.Count)
             {
                 hotbarButtons[i].gameObject.SetActive(true);
-                // Optionally set icon, text, etc. here
-                // Example: spellIcons[i].sprite = playerCharacter.spellBook[i].icon;
-            }
-            else
-            {
-                hotbarButtons[i].gameObject.SetActive(false);
-            }
-        }
-        for (int i = 0; i < spellIcons.Count; i++)
-        {
-            if (i < playerCharacter.spellBook.Count)
-            {
-                var spell = playerCharacter.spellBook[i];
-                // Set icon (if you have icons, otherwise skip)
-                // spellIcons[i].sprite = spell.icon;
 
-                // Cooldown logic
+                var spell = playerCharacter.spellBook[i];
+
+                // Set spell icon if available
+                if (spell.icon != null)
+                    spellIcons[i].sprite = spell.icon;
+
+                // Handle cooldown display
                 float timeSinceCast = Time.time - playerCharacter.lastCastTime;
                 float cooldown = spell.cooldown;
                 float remaining = Mathf.Clamp(cooldown - timeSinceCast, 0, cooldown);
@@ -55,7 +48,7 @@ public class HotbarUI : MonoBehaviour
                 if (remaining > 0)
                 {
                     cooldownTexts[i].text = remaining.ToString("F1");
-                    spellIcons[i].color = new Color(1, 1, 1, 0.5f); // faded when on cooldown
+                    spellIcons[i].color = new Color(1f, 1f, 1f, 0.5f); // faded
                 }
                 else
                 {
@@ -65,9 +58,15 @@ public class HotbarUI : MonoBehaviour
             }
             else
             {
-                cooldownTexts[i].text = "";
+                // Hide unused hotbar buttons
+                hotbarButtons[i].gameObject.SetActive(false);
+
+                // Clear icon and text just in case
+                spellIcons[i].sprite = null;
                 spellIcons[i].color = Color.clear;
+                cooldownTexts[i].text = "";
             }
-        }
     }
+}
+
 }

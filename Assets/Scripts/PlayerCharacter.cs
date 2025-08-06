@@ -172,7 +172,8 @@ public class PlayerCharacter : MonoBehaviour
             if (spell.requiredLevel == level && !spellBook.Contains(spell))
             {
                 spellBook.Add(spell);
-                Debug.Log("Unlocked spell: " + spell.spellName);
+                Debug.Log("Unlocked spell: " + spell.spellName + spellBook.Count);
+
             }
         }
     }

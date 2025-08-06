@@ -17,6 +17,7 @@ MonoBehaviour:
   visualEffectPrefab: {fileID: 0}
   spellType: 2
   requiredLevel: 2
+  icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   buffAmount: 1
   buffDuration: 5
   buffType: 2

@@ -13,7 +13,7 @@ public class GameLoader : MonoBehaviour
         if (prefab != null)
         {
             StartCoroutine (Spawnposition(prefab));
-        
+            
         }
         else
         {
@@ -28,13 +28,13 @@ public class GameLoader : MonoBehaviour
             spawnposition = GameObject.Find("spawnlocation"); // Wait for 2 seconds
             yield return null;
         }
-    
-        GameObject spawnball = GameObject.Find("spawnlocation");
 
+            GameObject spawnball = GameObject.Find("spawnlocation");
             Vector3 spawnPosition = spawnball.GetComponent<Transform>().position;
             //*Vector3 spawnPosition = new Vector3(51, -607, -302); // Set your desired spawn position
-        Debug.Log(spawnPosition);
             GameObject player = Instantiate(prefab, spawnPosition, Quaternion.identity);
-            player.name = "Player";
+            player.name = "player";
+        
+        Debug.Log("I did it!");
     }
 }

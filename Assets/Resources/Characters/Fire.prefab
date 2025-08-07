@@ -78,6 +78,8 @@ MonoBehaviour:
   playerSpeed: 15
   jumpHeight: 2
   gravityValue: -9.81
+  maxwalljumps: 2
+  minwallAngle: 60
 --- !u!114 &8628757240828635571
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,9 +7,13 @@ public class Move : MonoBehaviour
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
+    private bool istouchingwall;
     public float playerSpeed = 2.0f;
     public float jumpHeight = 1.0f;
     public float gravityValue = -9.81f;
+    private float walljumps;
+    public float maxwalljumps = 1.0f;
+    public float minwallAngle = 60f; // Minimum angle to consider as a wall
 
     private Vector3 storedMoveDirection = Vector3.zero;
 
@@ -17,7 +21,7 @@ public class Move : MonoBehaviour
     private void Start()
     {
         controller = gameObject.AddComponent<CharacterController>();
-        
+
     }
 
     void Update()
@@ -27,27 +31,64 @@ public class Move : MonoBehaviour
     // Always read input for movement
     Vector3 move = transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical");
     move = Vector3.ClampMagnitude(move, 1f);
+        if (controller.isGrounded)
+        {
+            groundedPlayer = true;
+            walljumps = maxwalljumps;
+        }
+        else
+        {
+            groundedPlayer = false;
+        }
+     
+    
+        // Jump
+        if (Input.GetButtonDown("Jump") && groundedPlayer)
+        {
+            playerVelocity.y = Mathf.Sqrt(jumpHeight * 2.0f * -gravityValue);
+        }
 
-    // Jump
-    if (Input.GetButtonDown("Jump") && groundedPlayer)
-    {
-        playerVelocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
+     
+
+        // Apply gravity
+        playerVelocity.y += gravityValue * Time.deltaTime;
+
+        // Combine horizontal and vertical movement
+        Vector3 finalMove = (move * playerSpeed) + (playerVelocity.y * Vector3.up);
+        controller.Move(finalMove * Time.deltaTime);
     }
 
-    // Apply gravity
-    playerVelocity.y += gravityValue * Time.deltaTime;
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Vector3 surfaceNormal = hit.normal;
+        float angle = Vector3.Angle(surfaceNormal, Vector3.up);
+        if (angle < 90f && angle > minwallAngle && walljumps > 0)
+        {
+            istouchingwall = true;
+            // If the player is touching a wall, allow jumping off it
+            groundedPlayer = false; // Prevent jumping while touching the wall
 
-    // Combine horizontal and vertical movement
-    Vector3 finalMove = (move * playerSpeed) + (playerVelocity.y * Vector3.up);
-    controller.Move(finalMove * Time.deltaTime);
-}
+            // Check if the player presses the jump button while touching the wall
+
+            if (Input.GetButtonDown("Jump"))
+            {
+                playerVelocity.y = Mathf.Sqrt(jumpHeight * 2.0f * -gravityValue);
+                walljumps -= 1.0f;
+            }
+            else
+            {
+                groundedPlayer = false;
+            }
+        }
+    // surfaceNormal now holds the direction perpendicular to the surface you hit
+        }
     /*void Update()
     {
         groundedPlayer = controller.isGrounded;
-
+       
 
         // Horizontal input
-        Vector3 move = Vector3.zero;
+       Vector3 move = Vector3.zero;
 
         if (groundedPlayer)
         {

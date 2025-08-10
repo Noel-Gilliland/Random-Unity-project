@@ -19,7 +19,7 @@ public class PlayerLocator : MonoBehaviour
     {
         while (Instance == null)
         {
-            GameObject playerObj = GameObject.Find("Player"); // or FindWithTag("Player")
+            GameObject playerObj = GameObject.FindWithTag("Player"); // or FindWithTag("Player")
             if (playerObj != null)
             {
                 Instance = playerObj.GetComponentInChildren<PlayerCharacter>();

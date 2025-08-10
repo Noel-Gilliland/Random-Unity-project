@@ -14,6 +14,7 @@ public class Move : MonoBehaviour
     private float walljumps;
     public float maxwalljumps = 1.0f;
     public float minwallAngle = 60f; // Minimum angle to consider as a wall
+    public float walljumpPush = 20.0f; // Push force when jumping off a wall
 
     private Vector3 storedMoveDirection = Vector3.zero;
 
@@ -54,7 +55,10 @@ public class Move : MonoBehaviour
         playerVelocity.y += gravityValue * Time.deltaTime;
 
         // Combine horizontal and vertical movement
-        Vector3 finalMove = (move * playerSpeed) + (playerVelocity.y * Vector3.up);
+        Vector3 finalMove = (move * playerSpeed) + (playerVelocity.y * Vector3.up) + (playerVelocity.x * Vector3.right) + (playerVelocity.z * Vector3.forward);
+
+        playerVelocity.x *= 0.9f; 
+        playerVelocity.z *= 0.9f; 
         controller.Move(finalMove * Time.deltaTime);
     }
 
@@ -73,6 +77,8 @@ public class Move : MonoBehaviour
             if (Input.GetButtonDown("Jump"))
             {
                 playerVelocity.y = Mathf.Sqrt(jumpHeight * 2.0f * -gravityValue);
+                playerVelocity.x = surfaceNormal.x * walljumpPush * 5.0f; // Push away from the wall
+                playerVelocity.z = surfaceNormal.z * walljumpPush * 5.0f;
                 walljumps -= 1.0f;
             }
             else

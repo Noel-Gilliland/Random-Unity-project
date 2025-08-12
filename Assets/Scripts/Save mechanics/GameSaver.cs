@@ -19,7 +19,7 @@ public class GameSaver : MonoBehaviour
                 GameObject player = GameObject.Find("Player");
                 if (player != null)
                 {
-                    player.transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
+                    player.transform.position = new Vector3(data.playerPos[0], data.playerPos[1], data.playerPos[2]);
                     player.GetComponent<PlayerCharacter>().Health = data.health;
                     Debug.Log("Game loaded!");
                 }

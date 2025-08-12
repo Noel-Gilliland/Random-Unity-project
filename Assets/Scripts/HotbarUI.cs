@@ -27,46 +27,37 @@ public class HotbarUI : MonoBehaviour
 {
     if (playerCharacter == null) return;
 
-    for (int i = 0; i < hotbarButtons.Count; i++)
+    // How many slots are safe to access across ALL lists + spellBook
+    int slotCount = Mathf.Min(
+        hotbarButtons.Count,
+        spellIcons.Count,
+        cooldownTexts.Count,
+        playerCharacter.spellBook != null ? playerCharacter.spellBook.Count : 0
+    );
+
+    // Update only safe indices
+    for (int i = 0; i < slotCount; i++)
     {
-            Debug.Log("Hello");
-        if (i < playerCharacter.spellBook.Count)
-            {
-                hotbarButtons[i].gameObject.SetActive(true);
+        hotbarButtons[i].gameObject.SetActive(true);
 
-                var spell = playerCharacter.spellBook[i];
+        var spell = playerCharacter.spellBook[i];
 
-                // Set spell icon if available
-                if (spell.icon != null)
-                    spellIcons[i].sprite = spell.icon;
+        // icon
+        if (spell.icon != null)
+            spellIcons[i].sprite = spell.icon;
 
-                // Handle cooldown display
-                float timeSinceCast = Time.time - playerCharacter.lastCastTime;
-                float cooldown = spell.cooldown;
-                float remaining = Mathf.Clamp(cooldown - timeSinceCast, 0, cooldown);
+        // cooldown (uses your existing single lastCastTime)
+        float remaining = Mathf.Clamp(spell.cooldown - (Time.time - playerCharacter.lastCastTime), 0f, spell.cooldown);
+        cooldownTexts[i].text = remaining > 0f ? remaining.ToString("F1") : "";
+        spellIcons[i].color = remaining > 0f ? new Color(1f,1f,1f,0.5f) : Color.white;
+    }
 
-                if (remaining > 0)
-                {
-                    cooldownTexts[i].text = remaining.ToString("F1");
-                    spellIcons[i].color = new Color(1f, 1f, 1f, 0.5f); // faded
-                }
-                else
-                {
-                    cooldownTexts[i].text = "";
-                    spellIcons[i].color = Color.white;
-                }
-            }
-            else
-            {
-                // Hide unused hotbar buttons
-                hotbarButtons[i].gameObject.SetActive(false);
-
-                // Clear icon and text just in case
-                spellIcons[i].sprite = null;
-                spellIcons[i].color = Color.clear;
-                cooldownTexts[i].text = "";
-            }
+    // Hide any extra UI slots beyond what we can safely fill
+    for (int i = slotCount; i < hotbarButtons.Count; i++)
+    {
+        hotbarButtons[i].gameObject.SetActive(false);
     }
 }
+
 
 }

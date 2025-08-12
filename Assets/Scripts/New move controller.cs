@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
+/*
 public class Newmovecontroller : MonoBehaviour
 {
     public float acceleration = 10f;
@@ -38,4 +38,4 @@ public class Newmovecontroller : MonoBehaviour
 
     
 }
-
+*/

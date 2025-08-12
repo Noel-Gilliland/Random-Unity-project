@@ -1,14 +1,30 @@
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 [System.Serializable]
+public class CharacterMeta {
+    public string id;        // GUID
+    public string name;      // “NoelFireMage”
+    public string archetype; // “Fire”, “Ice”, “Necromancy”
+    public string lastScene; // convenience (optional)
+}
+
+[System.Serializable]
+public class RosterData
+{
+    public List<CharacterMeta> characters = new();
+}
+
+[System.Serializable]
 public class SaveData
 {
-    public string characterName;
+    public string characterId;
     public string sceneName;
-    public float[] position;
+    public float[] playerPos;
     public float health;
     
+    public int level;
 }
 
 public static class SaveSystem
@@ -17,12 +33,25 @@ public static class SaveSystem
 
     public static void Save(GameObject player)
     {
-        SaveData data = new SaveData();
-        data.characterName = PlayerPrefs.GetString("SelectedCharacter");
-        data.sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        SaveData data = new SaveData
+        {
+            characterId = PlayerPrefs.GetString("SelectedCharacter"),
+            sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name
+        };
         Vector3 pos = player.transform.position;
-        data.position = new float[] { pos.x, pos.y, pos.z };
-        data.health = player.GetComponent<PlayerCharacter>().Health;
+        data.playerPos = new float[] { pos.x, pos.y, pos.z };
+
+        var pc = player.GetComponent<PlayerCharacter>();
+        if (pc != null)
+        {
+            data.level = pc.level;
+            data.health = pc.Health;
+        }
+        else
+        {
+            Debug.LogWarning("PlayerCharacter component not found on player object.");
+        }
+    
 
 
         string json = JsonUtility.ToJson(data, true);

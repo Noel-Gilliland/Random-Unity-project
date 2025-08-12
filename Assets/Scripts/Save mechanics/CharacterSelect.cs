@@ -1,11 +1,10 @@
+// CharacterSelect.cs (put on any GameObject in the scene)
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CharacterSelect : MonoBehaviour
-{
-    public void SelectCharacter(string characterName)
-    {
-        PlayerPrefs.SetString("SelectedCharacter", characterName);
-        SceneManager.LoadScene("Main_Scene"); // Name of your main scene
+public class CharacterSelect : MonoBehaviour {
+    public void Pick(string archetype) {
+        PlayerPrefs.SetString("SelectedCharacter", archetype); // "Fire" | "Ice" | "Necromancy"
+        SceneManager.LoadScene("Main_Scene"); // your gameplay scene name
     }
 }

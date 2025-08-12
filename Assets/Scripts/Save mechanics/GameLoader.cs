@@ -1,40 +1,34 @@
 using UnityEngine;
-using System.Collections;
+
 public class GameLoader : MonoBehaviour
-
 {
-    void Start()
+    public GameObject firePrefab;
+    public GameObject icePrefab;
+    public GameObject necroPrefab;
+
+    [System.Obsolete]
+    void Awake()
     {
-        string characterName = PlayerPrefs.GetString("SelectedCharacter");
+        // Get the choice saved in CharacterSelect scene
+        var choice = PlayerPrefs.GetString("SelectedCharacter", "Fire");
 
-
-
-        GameObject prefab = Resources.Load<GameObject>("Characters/" + characterName);
-        if (prefab != null)
+        // Pick prefab
+        GameObject prefab = choice switch
         {
-            StartCoroutine (Spawnposition(prefab));
-            
-        }
-        else
-        {
-            Debug.LogError("Character prefab not found: " + characterName);
-        }
-    }
-    IEnumerator Spawnposition(GameObject prefab)
-    {
-        GameObject spawnposition = null;
-        while (spawnposition == null)
-        {
-            spawnposition = GameObject.Find("spawnlocation"); // Wait for 2 seconds
-            yield return null;
-        }
+            "Ice" => icePrefab,
+            "Necromancy" => necroPrefab,
+            _ => firePrefab
+        };
 
-            GameObject spawnball = GameObject.Find("spawnlocation");
-            Vector3 spawnPosition = spawnball.GetComponent<Transform>().position;
-            //*Vector3 spawnPosition = new Vector3(51, -607, -302); // Set your desired spawn position
-            GameObject player = Instantiate(prefab, spawnPosition, Quaternion.identity);
-            player.name = "player";
-        
-        Debug.Log("I did it!");
+        // Spawn player
+        GameObject playerGO = Instantiate(prefab);
+
+        // Hook it up to GameManager
+        var gm = FindObjectOfType<GameManager>();
+        if (gm != null)
+        {
+            gm.player = playerGO.transform;
+            gm.playerCharacter = playerGO.GetComponent<PlayerCharacter>();
+        }
     }
 }
